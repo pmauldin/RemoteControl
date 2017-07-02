@@ -1,11 +1,16 @@
-import static spark.Spark.*;
+import groovy.transform.CompileStatic
 
+import static spark.Spark.*
+
+@CompileStatic
 class Server {
 
     static void main(String[] args) {
-        get("/test", { req, res ->
-            "caffeinate -u -t 2".execute()
-            return "Hello World"
+        webSocket("/echo", ServerEchoWebSocket.class)
+
+        get("/caffeinate", { req, res ->
+            ServerEchoWebSocket.relayMessage()
+            return "sent"
         })
     }
 }

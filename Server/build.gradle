@@ -1,4 +1,4 @@
-group 'remote-control.server'
+group 'remotecontrol.server'
 version '0.1'
 
 apply plugin: 'groovy'
