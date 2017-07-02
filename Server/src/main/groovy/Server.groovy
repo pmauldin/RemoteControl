@@ -1,16 +1,17 @@
-import groovy.transform.CompileStatic
-
 import static spark.Spark.*
 
-@CompileStatic
 class Server {
 
     static void main(String[] args) {
-        webSocket("/echo", ServerEchoWebSocket.class)
+        webSocket("/desktop", WebSocket.class)
 
-        get("/caffeinate", { req, res ->
-            ServerEchoWebSocket.relayMessage()
-            return "sent"
+        post("/caffeinate", { request, response ->
+            def user = request.queryParams("user")
+            def computerName = request.queryParams("computerName")
+
+            WebSocket.relayMessage(user, computerName)
+
+            return "ok"
         })
     }
 }
